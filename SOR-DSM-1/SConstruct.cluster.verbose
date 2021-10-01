@@ -1,0 +1,11 @@
+from DSMBuilder import initDSM, buildF
+
+width=1024*8
+DEVFLAGS=['-DTIMING','-DWIDTH='+str(width), '-DVERBOSE']
+
+envF=Environment(useFC=1)
+envF=initDSM(envF)
+envF.Append(CXXFLAGS = [DEVFLAGS]) 
+envF.Append(CPPPATH = ['.','/users/level5/2270838s/argodsm/include'])
+envF.Append(LIBPATH = ['/users/level5/2270838s/argodsm/lib'])
+buildF(envF,'sor-c', ['sor_main.cc'])
