@@ -69,24 +69,26 @@ void sor(float *p0,float *p1,float *rhs) {
 
 int main() {
     #include "sor_params.h"
-    clock_t total_start = clock();
     float *p0 = new float[(int64_t)(im+2)*(int64_t)(jm+2)*(int64_t)(km+2)];
     float *p1 = new float[(int64_t)(im+2)*(int64_t)(jm+2)*(int64_t)(km+2)];
     float *rhs = new float[(int64_t)(im+2)*(int64_t)(jm+2)*(int64_t)(km+2)];
     int iter;
-    const int niters = 5;
+    const int niters = 50;
     int i;
     int j;
     int k;
     for (i = 0;i <= im+1;i += 1) {
         for (j = 0;j <= jm+1;j += 1) {
             for (k = 0;k <= km+1;k += 1) {
-                rhs[F3D2C(im+2,jm+2,0,0,0,i,j,k)] = 1.0;
-                p0[F3D2C(im+2,jm+2,0,0,0,i,j,k)] = 1.0;
+                rhs[F3D2C(im+2,jm+2,0,0,0,i,j,k)] = 0.1+((i+1)*(j+1)*(k+1))/((im+2)*(jm+2)*(km+2));
+                p0[F3D2C(im+2,jm+2,0,0,0,i,j,k)] = ((i+1)*(j+1)*(k+1))/((im+2)*(jm+2)*(km+2));
+                p1[F3D2C(im+2,jm+2,0,0,0,i,j,k)] = ((i+1)*(j+1)*(k+1))/((im+2)*(jm+2)*(km+2));
+                //p0[F3D2C(im+2,jm+2,0,0,0,i,j,k)] = 1.0;
                 // p1[F3D2C(im+2,jm+2,0,0,0,i,j,k)] = 1.0;
             }
         }
     }
+    clock_t total_start = clock();
     
     for (iter = 1;iter <= niters;iter += 1) {
         if (iter % 2 == 0) {
